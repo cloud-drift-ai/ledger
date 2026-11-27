@@ -135,8 +135,11 @@ export function PwaProvider({ children }: { children: ReactNode }) {
       if (!import.meta.env.PROD) return
 
       try {
-        const registration = await navigator.serviceWorker.register('/sw.js', { scope: '/' })
-        if (!active) return
+const registration = await navigator.serviceWorker.register(
+  `${import.meta.env.BASE_URL}sw.js`,
+  { scope: import.meta.env.BASE_URL }
+)       
+ if (!active) return
 
         registrationRef.current = registration
         setServiceWorkerReady(Boolean(registration.active))
@@ -219,14 +222,19 @@ export function PwaProvider({ children }: { children: ReactNode }) {
   }, [installPrompt])
 
   const checkForUpdates = useCallback(async () => {
-    if (!('serviceWorker' in navigator)) return
-    const registration = registrationRef.current || await navigator.serviceWorker.getRegistration('/')
-    if (!registration) return
-    registrationRef.current = registration
-    await registration.update()
-    setUpdateAvailable(Boolean(registration.waiting))
-    setServiceWorkerReady(Boolean(registration.active))
-  }, [])
+  if (!('serviceWorker' in navigator)) return
+
+  const registration =
+    registrationRef.current ||
+    await navigator.serviceWorker.getRegistration(import.meta.env.BASE_URL)
+
+  if (!registration) return
+
+  registrationRef.current = registration
+  await registration.update()
+  setUpdateAvailable(Boolean(registration.waiting))
+  setServiceWorkerReady(Boolean(registration.active))
+}, [])
 
   const applyUpdate = useCallback(() => {
     const waitingWorker = registrationRef.current?.waiting
