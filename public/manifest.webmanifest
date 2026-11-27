@@ -1,27 +1,27 @@
 {
-  "name": "Ledger \u2014 Personal Finance",
+  "name": "Ledger — Personal Finance",
   "short_name": "Ledger",
   "description": "Private personal finance and accounting workspace.",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "/ledger/",
+  "scope": "/ledger/",
   "display": "standalone",
   "background_color": "#F6F8FC",
   "theme_color": "#14284D",
   "icons": [
     {
-      "src": "/ledger-192.png",
+      "src": "/ledger/ledger-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/ledger-512.png",
+      "src": "/ledger/ledger-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/ledger-maskable-512.png",
+      "src": "/ledger/ledger-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

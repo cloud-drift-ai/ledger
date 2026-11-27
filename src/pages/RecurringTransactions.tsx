@@ -558,7 +558,7 @@ export default function RecurringTransactions() {
           new Notification('Ledger payment reminder', {
             body: `${schedule.name} is ${timing}. ${formatMoney(schedule.amount_minor)}`,
             tag: notificationKey,
-            icon: '/favicon.svg',
+            icon: `${import.meta.env.BASE_URL}favicon.svg`,
           })
           window.localStorage.setItem(notificationKey, new Date().toISOString())
         } catch (notificationError) {

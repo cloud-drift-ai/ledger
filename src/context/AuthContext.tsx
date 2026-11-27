@@ -14,6 +14,13 @@ import type {
 
 import { supabase } from '../lib/supabase'
 
+// Build authentication callback URLs inside the deployed application base path.
+// Local development uses '/', while GitHub Pages uses '/ledger/'.
+function getAppRedirectUrl(route: string) {
+  const appBaseUrl = new URL(import.meta.env.BASE_URL, window.location.origin)
+  return new URL(route.replace(/^\/+/, ''), appBaseUrl).toString()
+}
+
 type AuthContextType = {
   user: User | null
   loading: boolean
@@ -112,7 +119,7 @@ export function AuthProvider({
           full_name: fullName,
         },
 
-        emailRedirectTo: `${window.location.origin}/login`,
+        emailRedirectTo: getAppRedirectUrl('login'),
       },
     })
 
@@ -150,7 +157,7 @@ export function AuthProvider({
   const resetPassword = async (email: string) => {
     const { error } =
       await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/reset-password`,
+        redirectTo: getAppRedirectUrl('reset-password'),
       })
 
     return { error }
