@@ -1,0 +1,881 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@400;500;600;700;800&family=Manrope:wght@200..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-ledger-navy: #0A2540;
+  --color-ledger-green: #0B9B78;
+  --color-ledger-red: #D95B70;
+  --color-ledger-bg: #F6F8FC;
+  --color-ledger-purple: #635BFF;
+}
+
+:root {
+  --ledger-bg: #F6F8FC;
+  --ledger-surface: #FFFFFF;
+  --ledger-surface-muted: #FAFBFD;
+  --ledger-text: #26364A;
+  --ledger-heading: #0A2540;
+  --ledger-muted: #8290A3;
+  --ledger-border: #E7EBF1;
+  --ledger-sidebar: #FFFFFF;
+  --ledger-accent: #635BFF;
+  --ledger-accent-strong: #5148D8;
+  --ledger-accent-soft: #F0EFFF;
+  font-family: "Manrope", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+  color: var(--ledger-text);
+  background: var(--ledger-bg);
+}
+
+html[data-accent="blue"] {
+  --ledger-accent: #2878D0;
+  --ledger-accent-strong: #1D5FA8;
+  --ledger-accent-soft: #EAF3FC;
+}
+html[data-accent="green"] {
+  --ledger-accent: #0B9B78;
+  --ledger-accent-strong: #08775C;
+  --ledger-accent-soft: #E9F8F3;
+}
+html[data-accent="amber"] {
+  --ledger-accent: #D18B32;
+  --ledger-accent-strong: #A96B1D;
+  --ledger-accent-soft: #FFF5E7;
+}
+html[data-accent="slate"] {
+  --ledger-accent: #64748B;
+  --ledger-accent-strong: #475569;
+  --ledger-accent-soft: #EEF2F6;
+}
+
+html[data-theme="dark"] {
+  --ledger-bg: #0D1726;
+  --ledger-surface: #152235;
+  --ledger-surface-muted: #1B2A3F;
+  --ledger-text: #DCE5F0;
+  --ledger-heading: #F1F5FA;
+  --ledger-muted: #9AA9BC;
+  --ledger-border: #2A3A50;
+  --ledger-sidebar: #111E30;
+  --ledger-accent-soft: color-mix(in srgb, var(--ledger-accent) 18%, #152235);
+}
+
+html[data-font="manrope"] {
+  font-family: "Manrope", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-optical-sizing: auto;
+}
+html[data-font="inter"] {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+html[data-font="system"] {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+html[data-font="inter-tight"] {
+  font-family: "Inter Tight", Inter, ui-sans-serif, system-ui, sans-serif;
+}
+html[data-font-size="small"] { font-size: 15px; }
+html[data-font-size="default"] { font-size: 16px; }
+html[data-font-size="large"] { font-size: 17px; }
+
+* { box-sizing: border-box; }
+html { min-width: 320px; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--ledger-bg);
+  color: var(--ledger-text);
+  font-family: inherit;
+  letter-spacing: -0.012em;
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+input, select, textarea { color: var(--ledger-text); }
+input::placeholder, textarea::placeholder { color: #A1AAB7; }
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ledger-accent) 28%, transparent);
+  outline-offset: 2px;
+}
+::selection { color: var(--ledger-heading); background: color-mix(in srgb, var(--ledger-accent) 20%, transparent); }
+
+/* Shared visual system for every financial module. */
+.ledger-app {
+  min-height: 100vh;
+  background: var(--ledger-bg) !important;
+  color: var(--ledger-text) !important;
+  font-family: inherit;
+}
+.ledger-app * { font-family: inherit; }
+html[data-font="manrope"] .ledger-app {
+  font-family: "Manrope", Inter, ui-sans-serif, system-ui, sans-serif !important;
+  font-optical-sizing: auto;
+}
+html[data-font="inter"] .ledger-app { font-family: Inter, ui-sans-serif, system-ui, sans-serif !important; }
+html[data-font="system"] .ledger-app { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important; }
+html[data-font="inter-tight"] .ledger-app { font-family: "Inter Tight", Inter, ui-sans-serif, system-ui, sans-serif !important; }
+.ledger-app aside {
+  background: var(--ledger-sidebar) !important;
+  border-color: var(--ledger-border) !important;
+}
+.ledger-app header,
+.ledger-app .ledger-panel,
+.ledger-app .ledger-surface {
+  background-color: var(--ledger-surface) !important;
+  border-color: var(--ledger-border) !important;
+}
+.ledger-app [class~="bg-ledger-bg"],
+.ledger-app [class~="bg-[#F6F8FC]"] { background-color: var(--ledger-bg) !important; }
+
+/* Accent colour follows the user's preference across old and new modules. */
+.ledger-app [class~="bg-[#635BFF]"],
+.ledger-app [class~="bg-ledger-purple"],
+.ledger-app [class~="bg-ledger-navy"] { background-color: var(--ledger-accent) !important; }
+.ledger-app [class~="bg-[#5148D8]"] { background-color: var(--ledger-accent-strong) !important; }
+.ledger-app [class~="text-[#635BFF]"],
+.ledger-app [class~="text-[#5148D8]"],
+.ledger-app [class~="text-ledger-purple"],
+.ledger-app [class~="text-ledger-navy"] { color: var(--ledger-accent) !important; }
+.ledger-app [class~="hover:bg-[#5148D8]"]:hover { background-color: var(--ledger-accent-strong) !important; }
+.ledger-app [class~="hover:text-[#5148D8]"]:hover { color: var(--ledger-accent-strong) !important; }
+.ledger-app [class~="border-[#635BFF]"],
+.ledger-app [class~="border-[#8D86FF]"] { border-color: var(--ledger-accent) !important; }
+.ledger-app [class~="bg-[#F0EFFF]"],
+.ledger-app [class~="bg-[#EEEFFF]"],
+.ledger-app [class~="bg-[#F5F4FF]"],
+.ledger-app [class~="bg-[#F8F7FF]"] { background-color: var(--ledger-accent-soft) !important; }
+
+/* Dark mode: convert the light surfaces and neutral typography consistently. */
+html[data-theme="dark"] .ledger-app [class~="bg-white"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#FFFFFF]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#FCFCFD]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#FAFBFD]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#FBFCFE]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#FCFCFD]"],
+html[data-theme="dark"] .ledger-app [class~="bg-slate-50"],
+html[data-theme="dark"] .ledger-app [class~="bg-slate-100"],
+html[data-theme="dark"] .ledger-app [class~="bg-gray-50"] {
+  background-color: var(--ledger-surface) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="bg-[#F3F5F8]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#F6F7FA]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#F4F5F8]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#F7F8FA]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#F3F5F8]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#F6F7FA]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#FAFBFD]"],
+html[data-theme="dark"] .ledger-app [class~="bg-slate-50"] {
+  background-color: var(--ledger-surface-muted) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="text-[#0A2540]"],
+html[data-theme="dark"] .ledger-app [class~="text-[#26364A]"],
+html[data-theme="dark"] .ledger-app [class~="text-slate-800"],
+html[data-theme="dark"] .ledger-app [class~="text-slate-900"],
+html[data-theme="dark"] .ledger-app [class~="text-gray-900"] {
+  color: var(--ledger-heading) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="text-[#627187]"],
+html[data-theme="dark"] .ledger-app [class~="text-[#718096]"],
+html[data-theme="dark"] .ledger-app [class~="text-[#748196]"],
+html[data-theme="dark"] .ledger-app [class~="text-[#8290A3]"],
+html[data-theme="dark"] .ledger-app [class~="text-[#8491A3]"],
+html[data-theme="dark"] .ledger-app [class~="text-[#8A96A8]"],
+html[data-theme="dark"] .ledger-app [class~="text-[#98A3B3]"],
+html[data-theme="dark"] .ledger-app [class~="text-[#98A3B2]"],
+html[data-theme="dark"] .ledger-app [class~="text-slate-400"],
+html[data-theme="dark"] .ledger-app [class~="text-slate-500"],
+html[data-theme="dark"] .ledger-app [class~="text-slate-600"],
+html[data-theme="dark"] .ledger-app [class~="text-slate-700"] {
+  color: var(--ledger-muted) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="border-[#E7EBF1]"],
+html[data-theme="dark"] .ledger-app [class~="border-[#E1E7EF]"],
+html[data-theme="dark"] .ledger-app [class~="border-[#E8ECF2]"],
+html[data-theme="dark"] .ledger-app [class~="border-[#EEF1F5]"],
+html[data-theme="dark"] .ledger-app [class~="border-[#EDF0F4]"],
+html[data-theme="dark"] .ledger-app [class~="border-slate-100"],
+html[data-theme="dark"] .ledger-app [class~="border-slate-200"],
+html[data-theme="dark"] .ledger-app [class~="border-gray-200"] {
+  border-color: var(--ledger-border) !important;
+}
+html[data-theme="dark"] .ledger-app input,
+html[data-theme="dark"] .ledger-app select,
+html[data-theme="dark"] .ledger-app textarea {
+  background-color: var(--ledger-surface-muted);
+  color: var(--ledger-text);
+  border-color: var(--ledger-border);
+}
+html[data-theme="dark"] .ledger-app input::placeholder,
+html[data-theme="dark"] .ledger-app textarea::placeholder { color: #8291A5; }
+html[data-theme="dark"] .ledger-app table thead { background-color: var(--ledger-surface-muted) !important; }
+html[data-theme="dark"] .ledger-app tr:hover { background-color: color-mix(in srgb, var(--ledger-surface) 78%, white 4%); }
+html[data-theme="dark"] .ledger-app [class~="bg-[#EEF1F5]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#E7EBF1]"],
+html[data-theme="dark"] .ledger-app [class~="bg-slate-200"] { background-color: var(--ledger-border) !important; }
+
+/* Density and accessibility preferences. */
+html[data-density="compact"] .ledger-app table th,
+html[data-density="compact"] .ledger-app table td { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+html[data-density="compact"] .ledger-app nav button { padding-top: 0.48rem !important; padding-bottom: 0.48rem !important; }
+html[data-high-contrast="true"] { --ledger-muted: #596579; }
+html[data-theme="dark"][data-high-contrast="true"] { --ledger-muted: #C0CCDA; --ledger-border: #52627A; }
+html[data-high-contrast="true"] .ledger-app button,
+html[data-high-contrast="true"] .ledger-app a { text-decoration-thickness: 1.5px; }
+html[data-reduced-motion="true"],
+html[data-reduced-motion="true"] * { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+html[data-hide-balances="true"] .ledger-app .tabular-nums,
+html[data-hide-balances="true"] .ledger-app [data-sensitive-value="true"] {
+  filter: blur(6px);
+  user-select: none;
+}
+
+/* Collapsible desktop navigation. */
+@media (min-width: 1024px) {
+  .ledger-app[data-sidebar-collapsed="true"] aside { width: 76px !important; }
+  .ledger-app[data-sidebar-collapsed="true"] .sidebar-brand-copy,
+  .ledger-app[data-sidebar-collapsed="true"] .sidebar-nav-heading,
+  .ledger-app[data-sidebar-collapsed="true"] .sidebar-nav-label,
+  .ledger-app[data-sidebar-collapsed="true"] .sidebar-active-dot { display: none !important; }
+  .ledger-app[data-sidebar-collapsed="true"] .sidebar-brand { justify-content: center !important; padding-left: 0 !important; padding-right: 0 !important; }
+  .ledger-app[data-sidebar-collapsed="true"] .sidebar-nav-button { justify-content: center !important; padding-left: 0.7rem !important; padding-right: 0.7rem !important; }
+  .ledger-app[data-sidebar-collapsed="true"] .sidebar-profile-details,
+  .ledger-app[data-sidebar-collapsed="true"] .sidebar-profile-chevron { display: none !important; }
+  .ledger-app[data-sidebar-collapsed="true"] .sidebar-profile-button { justify-content: center !important; padding-left: 0.35rem !important; padding-right: 0.35rem !important; }
+}
+
+/* Financial values are masked when the privacy setting is enabled. */
+.privacy-hidden .tabular-nums { filter: blur(6px); user-select: none; }
+
+/* Restrained scrollbars. */
+* { scrollbar-width: thin; scrollbar-color: #D8DEE8 transparent; }
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { border-radius: 999px; background: #D8DEE8; }
+*::-webkit-scrollbar-track { background: transparent; }
+.tabular-nums { font-variant-numeric: tabular-nums lining-nums; }
+.ledger-panel { border: 1px solid var(--ledger-border); border-radius: 17px; background: var(--ledger-surface); box-shadow: 0 1px 2px rgba(16, 42, 67, 0.035); }
+.ledger-muted { color: var(--ledger-muted); }
+
+
+/* ==========================================================================
+   LEDGER UI 2.1 — CONSISTENT FINTECH DESIGN SYSTEM
+   These tokens are shared by the dashboard and every financial module.
+   ========================================================================== */
+
+:root {
+  --ledger-card-radius: 16px;
+  --ledger-control-radius: 10px;
+  --ledger-card-shadow: 0 1px 2px rgba(16, 42, 67, 0.035), 0 8px 24px rgba(16, 42, 67, 0.025);
+  --ledger-card-shadow-hover: 0 12px 28px rgba(16, 42, 67, 0.075);
+  --ledger-success: #087F61;
+  --ledger-success-soft: #EAF8F2;
+  --ledger-danger: #B83E55;
+  --ledger-danger-soft: #FFF0F2;
+  --ledger-warning: #966317;
+  --ledger-warning-soft: #FFF8E8;
+  --ledger-info: #2868A8;
+  --ledger-info-soft: #EEF6FF;
+}
+
+html[data-theme="dark"] {
+  --ledger-bg: #0B1422;
+  --ledger-surface: #121F31;
+  --ledger-surface-muted: #18283D;
+  --ledger-text: #D9E3EF;
+  --ledger-heading: #F4F7FB;
+  --ledger-muted: #A1B0C3;
+  --ledger-border: #2A3B52;
+  --ledger-sidebar: #101C2C;
+  --ledger-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.18), 0 10px 28px rgba(0, 0, 0, 0.10);
+  --ledger-card-shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.24);
+  --ledger-success: #6BD6AE;
+  --ledger-success-soft: #15372F;
+  --ledger-danger: #FF9BAA;
+  --ledger-danger-soft: #3B202B;
+  --ledger-warning: #F2C879;
+  --ledger-warning-soft: #3A3020;
+  --ledger-info: #91C7FF;
+  --ledger-info-soft: #1B3049;
+}
+
+html[data-theme="dark"] body {
+  background: var(--ledger-bg);
+}
+
+/* Keep the shared shell in charge of page width and spacing. Older page
+   components had their own full-screen padding; remove that nested padding. */
+.ledger-app main > .min-h-screen,
+.ledger-app main > .min-h-full {
+  min-height: auto !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+/* A consistent surface treatment across Accounts, Transactions, Transfers,
+   Investments, Budgets, Goals, Reports, Recurring and Backup & Restore. */
+.ledger-app main [class~="bg-white"][class*="rounded"],
+.ledger-app main [class~="bg-[#FFFFFF]"][class*="rounded"] {
+  background-color: var(--ledger-surface) !important;
+  border-color: var(--ledger-border) !important;
+  box-shadow: var(--ledger-card-shadow);
+}
+.ledger-app main [class~="bg-white"][class*="rounded"]:hover {
+  border-color: color-mix(in srgb, var(--ledger-accent) 18%, var(--ledger-border));
+}
+.ledger-app main [class*="rounded-xl"][class*="border"],
+.ledger-app main [class*="rounded-2xl"][class*="border"],
+.ledger-app main [class*="rounded-[16px]"][class*="border"] {
+  border-color: var(--ledger-border);
+}
+.ledger-app main h1,
+.ledger-app main h2,
+.ledger-app main h3 {
+  letter-spacing: -0.035em;
+}
+.ledger-app main h1 {
+  color: var(--ledger-heading);
+  font-weight: 650;
+}
+.ledger-app main h2,
+.ledger-app main h3 {
+  color: var(--ledger-heading);
+}
+
+/* Unified form controls. */
+.ledger-app input:not([type="checkbox"]):not([type="radio"]),
+.ledger-app select,
+.ledger-app textarea {
+  border-radius: var(--ledger-control-radius);
+  border-color: var(--ledger-border);
+  background-color: var(--ledger-surface);
+  color: var(--ledger-text);
+  transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+}
+.ledger-app input:not([type="checkbox"]):not([type="radio"]):focus,
+.ledger-app select:focus,
+.ledger-app textarea:focus {
+  border-color: var(--ledger-accent) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ledger-accent) 13%, transparent);
+  outline: none;
+}
+.ledger-app input[type="checkbox"],
+.ledger-app input[type="radio"] {
+  accent-color: var(--ledger-accent);
+}
+.ledger-app button {
+  -webkit-tap-highlight-color: transparent;
+}
+.ledger-app button:focus-visible,
+.ledger-app a:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ledger-accent) 30%, transparent);
+  outline-offset: 2px;
+}
+
+/* Tables are compact, legible and consistent across all modules. */
+.ledger-app table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.ledger-app table thead th {
+  color: var(--ledger-muted);
+  font-size: 0.69rem;
+  font-weight: 650;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+.ledger-app table tbody td {
+  color: var(--ledger-text);
+}
+.ledger-app table tbody tr:not(:last-child) td {
+  border-bottom: 1px solid var(--ledger-border);
+}
+.ledger-app table tbody tr {
+  transition: background-color 120ms ease;
+}
+
+/* Shared neutral surfaces and typography for light and dark themes. */
+.ledger-app [class~="bg-white"],
+.ledger-app [class~="bg-[#FFFFFF]"] {
+  background-color: var(--ledger-surface);
+}
+.ledger-app [class~="bg-slate-50"],
+.ledger-app [class~="bg-slate-100"],
+.ledger-app [class~="bg-gray-50"],
+.ledger-app [class~="bg-[#FAFBFD]"],
+.ledger-app [class~="bg-[#F7F8FA]"],
+.ledger-app [class~="bg-[#F6F8FC]"],
+.ledger-app [class~="bg-[#F3F5F8]"] {
+  background-color: var(--ledger-surface-muted);
+}
+.ledger-app [class~="text-slate-900"],
+.ledger-app [class~="text-slate-800"],
+.ledger-app [class~="text-[#0A2540]"],
+.ledger-app [class~="text-[#26364A]"] {
+  color: var(--ledger-heading);
+}
+.ledger-app [class~="text-slate-700"],
+.ledger-app [class~="text-slate-600"],
+.ledger-app [class~="text-[#42536A]"],
+.ledger-app [class~="text-[#627187]"] {
+  color: var(--ledger-text);
+}
+.ledger-app [class~="text-slate-500"],
+.ledger-app [class~="text-slate-400"],
+.ledger-app [class~="text-[#718096]"],
+.ledger-app [class~="text-[#748196]"],
+.ledger-app [class~="text-[#8290A3]"],
+.ledger-app [class~="text-[#8491A3]"],
+.ledger-app [class~="text-[#8A96A8]"],
+.ledger-app [class~="text-[#98A3B3]"],
+.ledger-app [class~="text-[#98A3B2]"] {
+  color: var(--ledger-muted);
+}
+.ledger-app [class~="border-slate-100"],
+.ledger-app [class~="border-slate-200"],
+.ledger-app [class~="border-slate-300"],
+.ledger-app [class~="border-[#E7EBF1]"],
+.ledger-app [class~="border-[#E1E7EF]"],
+.ledger-app [class~="border-[#E5EAF1]"],
+.ledger-app [class~="border-[#E8ECF2]"],
+.ledger-app [class~="border-[#EEF1F5]"],
+.ledger-app [class~="divide-slate-100"],
+.ledger-app [class~="divide-[#EEF1F5]"] {
+  border-color: var(--ledger-border);
+}
+
+/* Semantic alert and status colours remain distinct in dark mode. */
+html[data-theme="dark"] .ledger-app [class~="bg-red-50"],
+html[data-theme="dark"] .ledger-app [class~="bg-red-100"] {
+  background-color: var(--ledger-danger-soft) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="text-red-700"],
+html[data-theme="dark"] .ledger-app [class~="text-red-600"] {
+  color: var(--ledger-danger) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="border-red-200"] {
+  border-color: color-mix(in srgb, var(--ledger-danger) 35%, var(--ledger-border)) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="bg-green-50"],
+html[data-theme="dark"] .ledger-app [class~="bg-emerald-50"],
+html[data-theme="dark"] .ledger-app [class~="bg-green-100"] {
+  background-color: var(--ledger-success-soft) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="text-green-700"],
+html[data-theme="dark"] .ledger-app [class~="text-emerald-700"],
+html[data-theme="dark"] .ledger-app [class~="text-emerald-800"] {
+  color: var(--ledger-success) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="border-green-200"],
+html[data-theme="dark"] .ledger-app [class~="border-emerald-200"] {
+  border-color: color-mix(in srgb, var(--ledger-success) 32%, var(--ledger-border)) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="bg-amber-50"],
+html[data-theme="dark"] .ledger-app [class~="bg-amber-100"] {
+  background-color: var(--ledger-warning-soft) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="text-amber-800"],
+html[data-theme="dark"] .ledger-app [class~="text-amber-700"] {
+  color: var(--ledger-warning) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="border-amber-200"] {
+  border-color: color-mix(in srgb, var(--ledger-warning) 32%, var(--ledger-border)) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="bg-blue-50"],
+html[data-theme="dark"] .ledger-app [class~="bg-blue-100"] {
+  background-color: var(--ledger-info-soft) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="text-blue-900"],
+html[data-theme="dark"] .ledger-app [class~="text-blue-800"],
+html[data-theme="dark"] .ledger-app [class~="text-blue-700"] {
+  color: var(--ledger-info) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="border-blue-100"],
+html[data-theme="dark"] .ledger-app [class~="border-blue-200"] {
+  border-color: color-mix(in srgb, var(--ledger-info) 32%, var(--ledger-border)) !important;
+}
+
+/* The profile control is an account menu, not a workspace switcher. */
+.ledger-profile-popover {
+  background: var(--ledger-surface);
+  border-color: var(--ledger-border);
+  color: var(--ledger-text);
+}
+.ledger-profile-popover-header {
+  border-color: var(--ledger-border);
+}
+.ledger-profile-popover-header p:first-child {
+  color: var(--ledger-heading);
+}
+.ledger-profile-popover-header p:last-child {
+  color: var(--ledger-muted);
+}
+.ledger-profile-menu-item {
+  color: var(--ledger-text);
+}
+.ledger-profile-menu-item:hover {
+  background: var(--ledger-surface-muted);
+  color: var(--ledger-heading);
+}
+.ledger-profile-signout {
+  color: var(--ledger-danger);
+}
+.ledger-profile-signout:hover {
+  background: var(--ledger-danger-soft);
+  color: var(--ledger-danger);
+}
+.ledger-profile-trigger {
+  border-color: var(--ledger-border);
+  background: var(--ledger-surface-muted);
+}
+.ledger-profile-trigger:hover {
+  border-color: color-mix(in srgb, var(--ledger-accent) 28%, var(--ledger-border));
+  background: var(--ledger-accent-soft);
+}
+.ledger-profile-avatar {
+  background: var(--ledger-accent-soft);
+  color: var(--ledger-accent);
+}
+
+/* Responsive tables remain usable on phones without shrinking the text. */
+.ledger-app main .overflow-x-auto {
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 640px) {
+  .ledger-app main {
+    padding: 1rem !important;
+  }
+  .ledger-app main > .min-h-screen,
+  .ledger-app main > .min-h-full {
+    padding: 0 !important;
+  }
+  .ledger-app main h1 {
+    font-size: 1.45rem;
+  }
+  .ledger-app main h2 {
+    font-size: 1.15rem;
+  }
+  .ledger-app main button {
+    min-height: 38px;
+  }
+}
+
+/* Slightly denser tables and cards when the user chooses Compact. */
+html[data-density="compact"] .ledger-app main [class*="rounded-xl"],
+html[data-density="compact"] .ledger-app main [class*="rounded-2xl"] {
+  border-radius: 12px;
+}
+html[data-density="compact"] .ledger-app main section,
+html[data-density="compact"] .ledger-app main article {
+  --ledger-card-radius: 12px;
+}
+html[data-density="comfortable"] .ledger-app main table th,
+html[data-density="comfortable"] .ledger-app main table td {
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+}
+
+/* Stronger separation in high-contrast mode. */
+html[data-high-contrast="true"] {
+  --ledger-muted: #58677B;
+  --ledger-border: #C6CFDA;
+}
+html[data-theme="dark"][data-high-contrast="true"] {
+  --ledger-muted: #D1DCE9;
+  --ledger-border: #667A94;
+}
+
+
+/* Theme-aware semantic colours used by the connection badge, dashboard
+   indicators, settings callouts and account-type icons. */
+html[data-theme="dark"] .ledger-app [class~="bg-[#F2FBF7]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#E9F8F3]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#EAF8F2]"] {
+  background-color: var(--ledger-success-soft) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="text-[#177A5D]"],
+html[data-theme="dark"] .ledger-app [class~="text-[#0B9B78]"] {
+  color: var(--ledger-success) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="border-[#D8F0E7]"] {
+  border-color: color-mix(in srgb, var(--ledger-success) 32%, var(--ledger-border)) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="bg-[#FFF7F7]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#FFF0F2]"] {
+  background-color: var(--ledger-danger-soft) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="text-[#B5475A]"],
+html[data-theme="dark"] .ledger-app [class~="text-[#D95B70]"] {
+  color: var(--ledger-danger) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="border-[#F4DADD]"] {
+  border-color: color-mix(in srgb, var(--ledger-danger) 32%, var(--ledger-border)) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="bg-[#FFF9E9]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#F1F3F7]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#F2F4F8]"],
+html[data-theme="dark"] .ledger-app [class~="bg-[#EEF3FA]"] {
+  background-color: var(--ledger-surface-muted) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="text-[#805B1A]"],
+html[data-theme="dark"] .ledger-app [class~="text-[#8C713C]"],
+html[data-theme="dark"] .ledger-app [class~="text-[#9A6A16]"] {
+  color: var(--ledger-warning) !important;
+}
+html[data-theme="dark"] .ledger-app [class~="border-[#F1DDAA]"] {
+  border-color: color-mix(in srgb, var(--ledger-warning) 32%, var(--ledger-border)) !important;
+}
+
+/* Consistent compact profile dropdown; no workspace selector is shown. */
+.ledger-profile-trigger {
+  border-color: var(--ledger-border) !important;
+  background: var(--ledger-surface-muted) !important;
+}
+.ledger-profile-trigger:hover {
+  border-color: color-mix(in srgb, var(--ledger-accent) 28%, var(--ledger-border)) !important;
+  background: var(--ledger-accent-soft) !important;
+}
+
+
+/* Authentication screens follow the selected appearance preference too. */
+html[data-theme="dark"] body [class~="bg-ledger-bg"],
+html[data-theme="dark"] body [class~="bg-[#F6F8FC]"] {
+  background-color: var(--ledger-bg) !important;
+}
+html[data-theme="dark"] body [class~="bg-white"] {
+  background-color: var(--ledger-surface) !important;
+}
+html[data-theme="dark"] body [class~="text-slate-900"],
+html[data-theme="dark"] body [class~="text-slate-800"],
+html[data-theme="dark"] body [class~="text-slate-700"],
+html[data-theme="dark"] body [class~="text-ledger-navy"] {
+  color: var(--ledger-heading) !important;
+}
+html[data-theme="dark"] body [class~="text-slate-600"],
+html[data-theme="dark"] body [class~="text-slate-500"],
+html[data-theme="dark"] body [class~="text-slate-400"] {
+  color: var(--ledger-muted) !important;
+}
+html[data-theme="dark"] body [class~="border-slate-100"],
+html[data-theme="dark"] body [class~="border-slate-200"],
+html[data-theme="dark"] body [class~="border-slate-300"] {
+  border-color: var(--ledger-border) !important;
+}
+html[data-theme="dark"] body input,
+html[data-theme="dark"] body select,
+html[data-theme="dark"] body textarea {
+  background-color: var(--ledger-surface-muted);
+  color: var(--ledger-text);
+  border-color: var(--ledger-border);
+}
+
+/* ==========================================================================
+   LEDGER — SOFT COLOUR LAYER
+   Distinctive but restrained accents help users scan larger lists of
+   accounts, transactions and investments without overwhelming the UI.
+   ========================================================================== */
+
+.ledger-app [data-tone="blue"] {
+  --ledger-item-color: #4F83E6;
+  --ledger-item-soft: #EEF4FF;
+  --ledger-item-ink: #2D63B5;
+  --ledger-item-border: #D8E6FB;
+}
+.ledger-app [data-tone="teal"] {
+  --ledger-item-color: #19A487;
+  --ledger-item-soft: #EAF8F3;
+  --ledger-item-ink: #087D66;
+  --ledger-item-border: #CDEEE3;
+}
+.ledger-app [data-tone="violet"] {
+  --ledger-item-color: #8A70DF;
+  --ledger-item-soft: #F2EEFF;
+  --ledger-item-ink: #6B50C6;
+  --ledger-item-border: #E1D8FF;
+}
+.ledger-app [data-tone="amber"] {
+  --ledger-item-color: #D99A37;
+  --ledger-item-soft: #FFF6E8;
+  --ledger-item-ink: #96621F;
+  --ledger-item-border: #F4E2C3;
+}
+.ledger-app [data-tone="rose"] {
+  --ledger-item-color: #E16B86;
+  --ledger-item-soft: #FFF0F3;
+  --ledger-item-ink: #B94865;
+  --ledger-item-border: #F6D8E0;
+}
+.ledger-app [data-tone="cyan"] {
+  --ledger-item-color: #3B9DB8;
+  --ledger-item-soft: #EAF7FB;
+  --ledger-item-ink: #247B96;
+  --ledger-item-border: #D2ECF3;
+}
+.ledger-app [data-tone="green"] {
+  --ledger-item-color: #2DA879;
+  --ledger-item-soft: #EAF8F2;
+  --ledger-item-ink: #187A58;
+  --ledger-item-border: #D0EEDF;
+}
+.ledger-app [data-tone="gold"] {
+  --ledger-item-color: #C99B32;
+  --ledger-item-soft: #FBF5E7;
+  --ledger-item-ink: #8F6B1E;
+  --ledger-item-border: #EFE2BE;
+}
+.ledger-app [data-tone="slate"] {
+  --ledger-item-color: #8796AA;
+  --ledger-item-soft: #F0F3F7;
+  --ledger-item-ink: #586A80;
+  --ledger-item-border: #E0E6ED;
+}
+
+/* Cards gain a thin coloured edge and a very faint tinted surface. */
+.ledger-app main .ledger-account-card[data-tone],
+.ledger-app main .ledger-investment-card[data-tone] {
+  position: relative;
+  isolation: isolate;
+  border-color: color-mix(in srgb, var(--ledger-item-color) 17%, var(--ledger-border)) !important;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--ledger-item-soft) 34%, var(--ledger-surface)),
+    var(--ledger-surface) 58%
+  ) !important;
+  box-shadow: var(--ledger-card-shadow);
+}
+.ledger-app .ledger-account-card::before,
+.ledger-app .ledger-investment-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 16px 16px 0 0;
+  background: var(--ledger-item-color);
+  opacity: 0.9;
+  pointer-events: none;
+}
+.ledger-app main .ledger-account-card[data-tone]:hover,
+.ledger-app main .ledger-investment-card[data-tone]:hover {
+  border-color: color-mix(in srgb, var(--ledger-item-color) 42%, var(--ledger-border)) !important;
+  box-shadow: var(--ledger-card-shadow-hover);
+}
+.ledger-app .ledger-account-icon,
+.ledger-app .ledger-investment-icon {
+  background: var(--ledger-item-soft) !important;
+  color: var(--ledger-item-ink) !important;
+  border: 1px solid color-mix(in srgb, var(--ledger-item-color) 13%, transparent);
+}
+.ledger-app .ledger-account-type-badge,
+.ledger-app .ledger-investment-type,
+.ledger-app .ledger-category-chip {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  border: 1px solid color-mix(in srgb, var(--ledger-item-color) 14%, transparent);
+  background: var(--ledger-item-soft) !important;
+  color: var(--ledger-item-ink) !important;
+  line-height: 1.35;
+}
+.ledger-app .ledger-category-chip {
+  border-radius: 999px;
+  padding: 0.22rem 0.58rem;
+  font-size: 0.7rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.ledger-app .ledger-category-chip-small {
+  padding: 0.16rem 0.48rem;
+  font-size: 0.64rem;
+}
+
+/* Income and expense have clear, familiar colours in both transaction views. */
+.ledger-app .ledger-entry-marker[data-type="income"] {
+  background: #E8F7F0;
+  color: #16835F;
+  border: 1px solid #CDEDDD;
+}
+.ledger-app .ledger-entry-marker[data-type="expense"] {
+  background: #FFF0F2;
+  color: #C25269;
+  border: 1px solid #F4D9DF;
+}
+.ledger-app .ledger-transaction-row[data-type="income"] td:first-child,
+.ledger-app .ledger-transaction-list-row[data-type="income"] {
+  border-left: 3px solid #2DA879;
+}
+.ledger-app .ledger-transaction-row[data-type="expense"] td:first-child,
+.ledger-app .ledger-transaction-list-row[data-type="expense"] {
+  border-left: 3px solid #E16B86;
+}
+.ledger-app .ledger-transaction-list-row {
+  padding-left: calc(1rem - 3px);
+}
+
+/* Recurring schedules use compact semantic chips rather than plain labels. */
+.ledger-app .ledger-recurring-type {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 650;
+}
+.ledger-app .ledger-recurring-type[data-type="income"] {
+  color: #147A59;
+  background: #EAF8F2;
+}
+.ledger-app .ledger-recurring-type[data-type="expense"] {
+  color: #B64F65;
+  background: #FFF0F3;
+}
+.ledger-app .ledger-recurring-row[data-type="income"] td:first-child {
+  border-left: 3px solid #2DA879;
+}
+.ledger-app .ledger-recurring-row[data-type="expense"] td:first-child {
+  border-left: 3px solid #E16B86;
+}
+.ledger-app .ledger-recurring-reminder[data-type="income"] {
+  border-left: 3px solid #2DA879 !important;
+}
+.ledger-app .ledger-recurring-reminder[data-type="expense"] {
+  border-left: 3px solid #E16B86 !important;
+}
+
+/* Dark mode keeps the same hue identity, but softens the tinted surfaces. */
+html[data-theme="dark"] .ledger-app [data-tone] {
+  --ledger-item-soft: color-mix(in srgb, var(--ledger-item-color) 17%, var(--ledger-surface));
+  --ledger-item-ink: color-mix(in srgb, var(--ledger-item-color) 74%, white);
+  --ledger-item-border: color-mix(in srgb, var(--ledger-item-color) 32%, var(--ledger-border));
+}
+html[data-theme="dark"] .ledger-app main .ledger-account-card[data-tone],
+html[data-theme="dark"] .ledger-app main .ledger-investment-card[data-tone] {
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--ledger-item-color) 7%, var(--ledger-surface)),
+    var(--ledger-surface) 62%
+  ) !important;
+}
+html[data-theme="dark"] .ledger-app .ledger-entry-marker[data-type="income"] {
+  background: color-mix(in srgb, #2DA879 19%, var(--ledger-surface));
+  color: #75D7B1;
+  border-color: color-mix(in srgb, #2DA879 35%, var(--ledger-border));
+}
+html[data-theme="dark"] .ledger-app .ledger-entry-marker[data-type="expense"] {
+  background: color-mix(in srgb, #E16B86 18%, var(--ledger-surface));
+  color: #F19AAD;
+  border-color: color-mix(in srgb, #E16B86 35%, var(--ledger-border));
+}
+html[data-theme="dark"] .ledger-app .ledger-recurring-type[data-type="income"] {
+  color: #75D7B1;
+  background: color-mix(in srgb, #2DA879 18%, var(--ledger-surface));
+}
+html[data-theme="dark"] .ledger-app .ledger-recurring-type[data-type="expense"] {
+  color: #F19AAD;
+  background: color-mix(in srgb, #E16B86 18%, var(--ledger-surface));
+}
